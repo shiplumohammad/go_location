@@ -11,6 +11,43 @@
 	} else {  
 	  alert("I'm sorry, but geolocation services are not supported by your browser.");  
 	}
+	$(document).ready(function (){
+	//wire up button click
+	$('#go').click(function(){
+	//test geolocation
+	if (navigator && navigator.geolocation){
+	navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+	}else{
+	error('Geolocation is not support.');
+	}
+	});
+	});
+	function geo_error(err){
+	if (err.code == 1){
+	error('This user denied the request for location informaton.')
+	}
+	else if (err.code == 2){
+	error ('Your location information is unavailable')
+	}
+	else if (err.code == 3){
+	error ('The request to get your location timed out.')
+	}
+	else{
+	error('An unknown error occurred while requesting your location')
+	}
+	}
+	function error(msg){
+	alert(msg);
+	}
+	function geo_success(position){
+	printlatlong(position.coords.latitude,position.coords.longitude);
+	}
+	//output latitude and longitude
+	function printlatlong(lat,lng){
+	alert(lat +" "+lng);
+	$('#lat').html('<p>lat:'+lat+'<p>');
+	$('#long').html('<p>long:'+lng+'<p>');
+	}
 	</script>
 	
 	
